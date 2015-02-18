@@ -81,6 +81,7 @@ get '/squads/:squad_id/students/:student_id' do
   id = params[:student_id].to_i
   student = @conn.exec('SELECT * FROM students WHERE id = $1 AND squad_id = $2', [ id, squad_id ] )
   @student = student[0]
+
   erb :'students/show'
 end
 
@@ -94,6 +95,7 @@ end
 
 post '/squads/:squad_id/students' do
   @conn.exec('INSERT INTO students (name, age, spirit_animal, squad_id) values ($1,$2,$3,$4)', [ params[:name]  ,params[:age],params[:spirit], params[:squad_id]])
+  # Student.create params
   redirect "/squads/#{params[:squad_id].to_i}"
 end
 
